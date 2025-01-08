@@ -34,7 +34,7 @@ st.markdown("Make use of recurrent neural network (RNN), gated recurrent unit (G
 
 # # Open 2-year models
 
-models_path = "pages/models/"
+models_path = "streamlit/pages/models/batch360_stateFalse"
 
 with open(f"{models_path}/2yr_models_rnn__stateTrue_bayes.pkl", "rb") as file:
      data_2yr_rnn = pickle.load(file)

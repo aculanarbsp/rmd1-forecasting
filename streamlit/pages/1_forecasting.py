@@ -38,7 +38,7 @@ import pickle
 
 # Open 2-year models
 
-models_path = "pages/models"
+models_path = "streamlit/pages/models/batch360_stateFalse"
 
 with open(f"{models_path}/2yr_models_rnn_stateTrue_bayes.pkl", "rb") as file:
      data_2yr_rnn = pickle.load(file)
@@ -50,6 +50,17 @@ with open(f"{models_path}/2yr_models_lstm_stateTrue_bayes.pkl", "rb") as file:
      data_2yr_lstm = pickle.load(file)
 
 data_2yr = {**data_2yr_rnn, **data_2yr_gru, **data_2yr_lstm}
+
+with open(f"{models_path}/10yr_models_rnn_stateTrue_bayes.pkl", "rb") as file:
+     data_10yr_rnn = pickle.load(file)
+
+with open(f"{models_path}/10yr_models_gru_stateTrue_bayes.pkl", "rb") as file:
+     data_10yr_gru = pickle.load(file)
+
+with open(f"{models_path}/10yr_models_lstm_stateTrue_bayes.pkl", "rb") as file:
+     data_10yr_lstm = pickle.load(file)
+
+data_10yr = {**data_10yr_rnn, **data_10yr_gru, **data_10yr_lstm}
 
 # #########################################################
 
