@@ -23,7 +23,7 @@ from keras._tf_keras.keras.regularizers import l1, l2
 
 st.write(f"Running on Tensorflow version: {tensorflow.__version__}")
 
-with open('pages/styles.css') as css: 
+with open('streamlit/pages/styles.css') as css: 
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
 st.markdown("# Welcome to RMD1 Machine Learning Portal!")
