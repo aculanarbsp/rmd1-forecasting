@@ -1,0 +1,33 @@
+name: rmd1-forecasting
+channels:
+  - apple
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.9  ## specify desired version
+  - tensorflow-deps
+  - pip
+  - matplotlib
+  - pandas
+  - numpy
+  - statsmodels
+  - scipy
+  - scikit-learn
+  - plotly
+  - seaborn
+  - requests
+  - h5py
+  - streamlit
+  - h5py
+  - transformers
+  - nltk
+  - ipykernel
+
+  ## PyPI packages
+  - pip:
+    - tensorflow-macos
+    - tensorflow-metal
+    - bayesian-optimization
+    - gym
+    - kaggle
+    - scikeras
