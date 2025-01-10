@@ -69,8 +69,8 @@ if uploaded_csv_2yr is not None:
     df_2yr.drop(columns=['date'], inplace=True)
     
     scaler_2yr = StandardScaler()
-    scaler_2yr.mean_ = df_2yr['rnn']['scaler_train_mean'][0] #scaler_train_mean is in an array of 1 element. Use '[0]' to get the element.
-    scaler_2yr.scale_ = df_2yr['rnn']['scaler_train_std'][0] #scaler_train_std is in an array of 1 element. Use '[0]' to get the element.
+    scaler_2yr.mean_ = data_2yr['rnn']['scaler_train_mean'][0] #scaler_train_mean is in an array of 1 element. Use '[0]' to get the element.
+    scaler_2yr.scale_ = data_2yr['rnn']['scaler_train_std'][0] #scaler_train_std is in an array of 1 element. Use '[0]' to get the element.
     
     df_2yr_scaled_ = scaler_2yr.transform(np.array(df_2yr['yield']).reshape(-1,1))
     for_input_2yr = df_2yr_scaled_.reshape(1, len(df_2yr), 1)
@@ -97,8 +97,8 @@ if uploaded_csv_10yr is not None:
     df_10yr.drop(columns=['date'], inplace=True)
     
     scaler_10yr = StandardScaler()
-    scaler_10yr.mean_ = df_10yr['rnn']['scaler_train_mean'][0] #scaler_train_mean is in an array of 1 element. Use '[0]' to get the element.
-    scaler_10yr.scale_ = df_10yr['rnn']['scaler_train_std'][0] #scaler_train_std is in an array of 1 element. Use '[0]' to get the element.
+    scaler_10yr.mean_ = data_10yr['rnn']['scaler_train_mean'][0] #scaler_train_mean is in an array of 1 element. Use '[0]' to get the element.
+    scaler_10yr.scale_ = data_10yr['rnn']['scaler_train_std'][0] #scaler_train_std is in an array of 1 element. Use '[0]' to get the element.
     
     df_10yr_scaled_ = scaler_10yr.transform(np.array(df_10yr['yield']).reshape(-1,1))
     for_input_10yr = df_10yr_scaled_.reshape(1, len(df_10yr), 1)
