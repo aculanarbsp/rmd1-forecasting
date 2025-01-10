@@ -39,9 +39,6 @@ with open(f"{models_path}/2yr_models_lstm_bayes.pkl", "rb") as file:
 
 data_2yr = {**data_2yr_rnn, **data_2yr_gru, **data_2yr_lstm}
 
-st.write("Data 2_year")
-st.write(data_2yr)
-
 with open(f"{models_path}/10yr_models_rnn_bayes.pkl", "rb") as file:
      data_10yr_rnn = pickle.load(file)
 
