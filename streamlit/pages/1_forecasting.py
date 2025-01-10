@@ -24,18 +24,6 @@ from keras._tf_keras.keras.regularizers import l1, l2
 from src.functions import plot_forecast
 import pickle
 
-# # allows reading of keras file. See issue:
-# # https://discuss.streamlit.io/t/attributeerror-thread-local-object-has-no-attribute-value/574/3
-
-# # import keras.backend.tensorflow_backend as tb
-# # tb._SYMBOLIC_SCOPE.value = True
-
-# # Opens a css file that changes the font style of the app to Montserrat
-# with open('dags/streamlit/pages/styles.css') as css: 
-#     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
-
-# ##############################################################
-
 # Open 2-year models
 
 models_path = "streamlit/pages/models/batch360_stateFalse"
@@ -74,43 +62,24 @@ uploaded_csv_2yr = st.file_uploader("Input .csv file of 2-year yields here:", ty
 
 uploaded_csv_10yr = st.file_uploader("Input .csv file of 10-year yields here:", type="csv")
 
-# get the models
-
-model_rnn = data_2yr_rnn['rnn']['model']
-model_gru = data_2yr_gru['gru']['model']
-model_lstm = data_2yr_lstm['lstm']['model']
-
-# get the transformer
-
-scaler = StandardScaler()
-# scaler.mean_ = data_2yr_rnn['rnn]['']
-# scaler.scale_ = test_scale
-
-# transform the input
-
 if uploaded_csv_2yr is not None:
     df_2yr = pd.read_csv(uploaded_csv_2yr)
     df_2yr['date'] = pd.to_datetime(df_2yr['date'])
     df_2yr.index = pd.to_datetime(df_2yr['date'])
     df_2yr.drop(columns=['date'], inplace=True)
     
-    fitted_scaler = scaler.fit(np.array(df_2yr['yield']).reshape(-1,1))
+    scaler_2yr = StandardScaler()
+    scaler_2yr.mean_ = df_2yr['rnn']['scaler_train_mean']
+    scaler_2yr.scale_ = df_2yr['rnn']['scaler_train_std']
     
-    df_2yr_scaled_ = fitted_scaler.transform(np.array(df_2yr['yield']).reshape(-1,1))
+    df_2yr_scaled_ = scaler_2yr.transform(np.array(df_2yr['yield']).reshape(-1,1))
     for_input_2yr = df_2yr_scaled_.reshape(1, len(df_2yr), 1)
 
     models = ['rnn', 'gru', 'lstm']
 
-    rnn_pred = fitted_scaler.inverse_transform(data_2yr['rnn']['model'].predict(for_input_2yr))
-    gru_pred = fitted_scaler.inverse_transform(data_2yr['gru']['model'].predict(for_input_2yr))
-    lstm_pred = fitted_scaler.inverse_transform(data_2yr['lstm']['model'].predict(for_input_2yr))
-
-    # st.write(f"RNN predictions: {rnn_pred}")
-    # st.write(f"GRU predictions: {gru_pred}")
-    # st.write(f"LSTM predictions: {lstm_pred}")
-
-    # predictions = [rnn_pred, gru_pred, lstm_pred]
-
+    rnn_pred = scaler_2yr.inverse_transform(data_2yr['rnn']['model'].predict(for_input_2yr))
+    gru_pred = scaler_2yr.inverse_transform(data_2yr['gru']['model'].predict(for_input_2yr))
+    lstm_pred = scaler_2yr.inverse_transform(data_2yr['lstm']['model'].predict(for_input_2yr))
 
     st.write("### Forecast plot (2yr UST):")
     plot_forecast(input_dates=df_2yr.index,
@@ -120,7 +89,6 @@ if uploaded_csv_2yr is not None:
                   forecast_lstm=lstm_pred,
                   dataset_="2yr")
      
-    
 
 if uploaded_csv_10yr is not None:
     df_10yr = pd.read_csv(uploaded_csv_10yr)
@@ -128,27 +96,22 @@ if uploaded_csv_10yr is not None:
     df_10yr.index = pd.to_datetime(df_10yr['date'])
     df_10yr.drop(columns=['date'], inplace=True)
     
-    fitted_scaler = scaler.fit(np.array(df_10yr['yield']).reshape(-1,1))
+    scaler_10yr = StandardScaler()
+    scaler_10yr.mean_ = df_10yr['rnn']['scaler_train_mean']
+    scaler_10yr.scale_ = df_10yr['rnn']['scaler_train_std']
     
-    df_10yr_scaled_ = fitted_scaler.transform(np.array(df_10yr['yield']).reshape(-1,1))
+    df_10yr_scaled_ = scaler_10yr.transform(np.array(df_10yr['yield']).reshape(-1,1))
     for_input_10yr = df_10yr_scaled_.reshape(1, len(df_10yr), 1)
 
     models = ['rnn', 'gru', 'lstm']
 
-    rnn_pred = fitted_scaler.inverse_transform(df_10yr['rnn']['model'].predict(for_input_10yr))
-    gru_pred = fitted_scaler.inverse_transform(df_10yr['gru']['model'].predict(for_input_10yr))
-    lstm_pred = fitted_scaler.inverse_transform(df_10yr['lstm']['model'].predict(for_input_10yr))
-
-    # st.write(f"RNN predictions: {rnn_pred}")
-    # st.write(f"GRU predictions: {gru_pred}")
-    # st.write(f"LSTM predictions: {lstm_pred}")
-
-    # predictions = [rnn_pred, gru_pred, lstm_pred]
-
+    rnn_pred = scaler_10yr.inverse_transform(data_10yr['rnn']['model'].predict(for_input_10yr))
+    gru_pred = scaler_10yr.inverse_transform(data_10yr['gru']['model'].predict(for_input_10yr))
+    lstm_pred = scaler_10yr.inverse_transform(data_10yr['lstm']['model'].predict(for_input_10yr))
 
     st.write("### Forecast plot (10yr UST):")
-    plot_forecast(input_dates=df_2yr.index,
-                  input_data=df_2yr,
+    plot_forecast(input_dates=df_10yr.index,
+                  input_data=df_10yr,
                   forecast_rnn=rnn_pred,
                   forecast_gru=gru_pred,
                   forecast_lstm=lstm_pred,

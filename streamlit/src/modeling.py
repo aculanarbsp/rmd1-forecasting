@@ -136,7 +136,7 @@ class Modeling:
             # record the n_units and l1_reg for the best model and the time took for cross-validating
             params[key]['H'] = grid_result.best_params_['n_units']
             params[key]['l1_reg'] = grid_result.best_params_['l1_reg']
-            params[key]['cv_time'] = end_time_cv - start_time_cv # records the 
+            params[key]['cv_time'] = end_time_cv - start_time_cv
 
             # save params
             with open(f'data/processed/{key}_{dataset}_fh{self.forecast_horizon}_state{self.stateful}.pickle', 'wb') as handle:
