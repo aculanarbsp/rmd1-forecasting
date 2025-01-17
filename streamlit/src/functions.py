@@ -200,20 +200,27 @@ def plot_forecast(input_dates, input_data, forecast_rnn, forecast_gru, forecast_
     },
         index=forecast_dates)
     
+    # average of the predictions of RNN, GRU, and LSTM
+    df['ave_pred'] = df[['rnn', 'gru', 'lstm']].mean(axis=1)
+    
     # Create a figure and axis
     plt.figure(figsize=(12, 6))
 
     # Plot actual data (10 past days)
     plt.plot(input_dates, input_data, label="Input Data (15 Days)", color='black', linewidth=2)
 
-    # RNN Forecast (Red)
+    # RNN Forecast (Blue)
     plt.plot(forecast_dates, df['rnn'], label="RNN Forecast", color='blue', linestyle='--', linewidth=2)
 
-    # GRU Forecast (Green)
+    # GRU Forecast (Red)
     plt.plot(forecast_dates, df['gru'], label="GRU Forecast", color='green', linestyle='--', linewidth=2)
 
-    # LSTM Forecast (Purple)
+    # LSTM Forecast (Green)
     plt.plot(forecast_dates, df['lstm'], label="LSTM Forecast", color='red', linestyle='--', linewidth=2)
+
+    # Averaged Predictions (Yellow)
+
+    plt.plot(forecast_dates, df['ave_pred'], label="Averaged Predictions", color='yellow', linewidth=2)
 
     # Adding title and labels
    #  plt.title("Time Series Forecasting with RNN, GRU, and LSTM", fontsize=16)

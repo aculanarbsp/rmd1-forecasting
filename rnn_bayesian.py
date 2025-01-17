@@ -9,12 +9,12 @@ import time
 
 import tensorflow as tf
 
-# Force Mac to use CPU
+# Force Mac to use CPU. Mac's GPU computing for tensorflow is much slower than CPU.
 tf.config.set_visible_devices([], 'GPU')
 
 model_ = "rnn"
 
-batch_size = 1000 #360
+batch_size = 360
 max_epochs = 250 #250
 
 forecast_horizon = 4

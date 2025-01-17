@@ -14,7 +14,7 @@ tf.config.set_visible_devices([], 'GPU')
 
 model_ = "lstm"
 
-batch_size = 1000
+batch_size = 360
 max_epochs = 250
 
 forecast_horizon = 4
