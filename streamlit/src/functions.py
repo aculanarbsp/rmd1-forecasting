@@ -220,7 +220,7 @@ def plot_forecast(input_dates, input_data, forecast_rnn, forecast_gru, forecast_
 
     # Averaged Predictions (Yellow)
 
-    plt.plot(forecast_dates, df['ave_pred'], label="Averaged Predictions", color='yellow', linewidth=2)
+    plt.plot(forecast_dates, df['ave_pred'], label="Averaged Predictions", color='black', linestyle='--',linewidth=2)
 
     # Adding title and labels
    #  plt.title("Time Series Forecasting with RNN, GRU, and LSTM", fontsize=16)
